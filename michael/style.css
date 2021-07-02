@@ -1,0 +1,14 @@
+#mapDiv {
+    padding: 5px;
+    width: 100%;
+    height: 600px;
+    box-shadow: 0 0 10px #999;
+}
+
+#infoDiv {
+    padding: 5px;
+    width: 100%;
+    height: 20px;
+    font-family: "monospace";
+    font-size: 10px;
+}
