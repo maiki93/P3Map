@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Titre de la page</title>
+  <script src="../GpSDK2D/GpSDK2D.js"></script>
+  <link rel="stylesheet" href="../GpSDK2D/GpSDK2D.css">
+</head>
+<body>
+
+<div id="map"></div>
+<div id="info"></div>
+
+<script language='Javascript' type='text/Javascript'>
+var map = Gp.Map.load(
+    "mapDiv",   // identifiant du conteneur HTML
+    // options d'affichage de la carte (Gp.MapOptions)
+    {           
+         // clef d'accès à la plateforme
+         apiKey: "jhyvi0fgmnuxvfv0zjzorvdn",
+         // centrage de la carte
+         center : {
+             location : "73 avenue de Paris, Saint-Mandé"
+         },
+         // niveau de zoom de la carte (de 1 à 21)
+         zoom : 17,
+         // Couches à afficher
+         layersOptions : {
+             "GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN-EXPRESS.STANDARD" : {
+             }
+         },
+         // Outils additionnels à proposer sur la carte
+         controlsOptions : {
+             // ajout d'une barre de recherche
+             "search" : {
+                 maximised : true
+             }
+         },
+         // Repères visuels
+         markersOptions : [{
+             content : "<h1>Pôle Géosciences</h1><br/><p>73 avenue de Paris, Saint-Mandé</p><br/><p><a href='http://www.pôle-géosciences.fr/index.htm' target='_blank'>Site Web</a></p>"
+         }]
+    }
+) ;
+</script>
+
+</body>
+</html>
