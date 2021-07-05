@@ -7,3 +7,8 @@ https://geoservices.ign.fr/documentation/utilisation_web/sdk-2D.html
 
 gitHub, version 3.1.9
 https://github.com/IGNF/geoportal-sdk/releases
+
+leaflet installation
+
+page5.html kind of working ! 
+

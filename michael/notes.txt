@@ -1,0 +1,25 @@
+
+
+URL flux WMS, to check version
+
+https://wxs.ign.fr/choisirinspire/geoportail/v/wms?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities
+
+//                    KEY         CONTEXTE
+https://wxs.ign.fr/choisirinspire/inspire/r/wms
+
+
+
+https://wxs.ign.fr/VOTRE_CLE/geoportail/r/wms?LAYERS=BDORTHO_PYRJPEG_WLD_WM&EXCEPTIONS=text/xml&FORMAT=image/jpeg&SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&STYLES=&CRS=EPSG:2154&BBOX=721000,6696000,721450,6696500&WIDTH=800&HEIGHT=600 
+
+
+
+CADASTRALPARCELS.PARCELS
+
+
+List keys : https://geoservices.ign.fr/blog/2021/01/29/Maj_Cles_Geoservices.html
+"pratique"
+"choisirgeoportail"
+"choisirinspire"
+
+=> seulement avec "choisirgeoportail"
+https://wxs.ign.fr/choisirgeoportail/ols/apis/completion?text=2%2C%20avenue%20pasteur%20saint%20m&type=StreetAddress&maximumResponses=5

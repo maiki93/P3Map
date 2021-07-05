@@ -15,9 +15,9 @@
    crossorigin=""></script>
    
    <!-- Extension Géoportail pour Leaflet, choose APIKEY here -->
-   <!-- <script data-key="choisirinspire" src="../GpPluginLeaflet/GpPluginLeaflet.js"></script> -->
+   <script data-key="choisirinspire" src="../GpPluginLeaflet/GpPluginLeaflet.js"></script>
    <!-- should be faster, maybe configurable, generated with key="choisirinspire" -->
-   <script data-url="../autoconf.json" src="../GpPluginLeaflet/GpPluginLeaflet.js"></script>
+   <!-- <script data-url="../autoconf.json" src="../GpPluginLeaflet/GpPluginLeaflet.js"></script> -->
    <link rel="stylesheet" href="../GpPluginLeaflet/GpPluginLeaflet.css" />
 </head>
 <body>
@@ -34,17 +34,33 @@
  
  
  function go() {
-	map = L.map('map').setView([44.8909, 1.2173], 15);
+ 
+	//var map = L.map('map', {crs : L.geoportalCRS.EPSG2154}).setView([44.8909, 1.2173], 15);
+	var map = L.map("map").setView([48.845,2.424],10) ;
 	// OpenStreetMap Layer
 	//var lyrOSM = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png?');
 	// MapBox
+	/*
 	var lyrOSM = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
 		maxZoom: 30,
 		id: 'mapbox/streets-v11',
 		tileSize: 512,
 		zoomOffset: -1,
 		accessToken:'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
-	});
+	});*/
+	
+	/*var lyrOrtho = L.geoportalLayer.WMTS({
+        layer: "ORTHOIMAGERY.ORTHOPHOTOS",
+    });*/
+	
+	var lyrOrtho = L.tileLayer(
+            'https://wxs.ign.fr/choisirgeoportail/geoportail/wmts?service=WMTS&request=GetTile&version=1.0.0&tilematrixset=PM&tilematrix={z}&tilecol={x}&tilerow={y}&layer=ORTHOIMAGERY.ORTHOPHOTOS&format=image/jpeg&style=normal',
+            {
+                minZoom : 0,
+                maxZoom : 18,
+                tileSize : 256,
+                attribution : "IGN-F/Géoportail"
+    });
 	
 	var lyrCadastre = L.geoportalLayer.WMS({
 		layer: "CADASTRALPARCELS.PARCELS"
@@ -52,11 +68,12 @@
 		//layer: "CADASTRALPARCELS.GRAPHE"
 		//layer: "CADASTRALPARCELS.PARCELLAIRE_EXPRESS"
 	},{ // leafletParams
-        opacity: 0.45
+        opacity: 0.35
     });
 
 		
-	map.addLayer(lyrOSM);
+	//map.addLayer(lyrOSM);
+	map.addLayer(lyrOrtho);
 	map.addLayer(lyrCadastre);
 		
 	var layerSwitcher = L.geoportalControl.LayerSwitcher({});
@@ -75,6 +92,8 @@
 	
 Gp.Services.getConfig({
     apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
+	//apiKey : "choisirgeoportail",
+	//apiKey : "choisirinspire",
     onSuccess : go
 }) ;
 

@@ -1,0 +1,34 @@
+
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Titre de la page</title>
+  
+	<style type="text/css">
+   #viewerDiv {
+       width:100%;
+       height:600px;
+   }
+	</style>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+	<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+</head>
+<body>
+	<div id="viewerDiv"></div>
+	
+	<script type="text/javascript">
+    window.onload= function() {
+        var map = L.map("viewerDiv").setView([48.845,2.424],10) ;
+        L.tileLayer(
+            'https://wxs.ign.fr/choisirgeoportail/geoportail/wmts?service=WMTS&request=GetTile&version=1.0.0&tilematrixset=PM&tilematrix={z}&tilecol={x}&tilerow={y}&layer=ORTHOIMAGERY.ORTHOPHOTOS&format=image/jpeg&style=normal',
+            {
+                minZoom : 0,
+                maxZoom : 18,
+                tileSize : 256,
+                attribution : "IGN-F/Géoportail"
+            }).addTo(map);
+    }
+	</script>
+</body>
+</html>

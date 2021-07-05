@@ -13,6 +13,9 @@
 <div id="infoDiv"></div>
 
 <script language='Javascript' type='text/Javascript'>
+
+window.onload = function () { 
+
 var map = Gp.Map.load(
     "mapDiv",   // identifiant du conteneur HTML
     // options d'affichage de la carte (Gp.MapOptions)
@@ -20,7 +23,8 @@ var map = Gp.Map.load(
          // clef d'accès à la plateforme
          //apiKey: "jhyvi0fgmnuxvfv0zjzorvdn",
          //apiKey: "choisirinspire",
-		 apiKey: "pratique",
+		 apiKey:"choisirgeoportail",
+		 //apiKey: "pratique",
          // centrage de la carte
          center : {
              location : "73 avenue de Paris, Saint-Mandé"
@@ -48,6 +52,8 @@ var map = Gp.Map.load(
 
 var info = document.getElementById("infoDiv");
 info.innerHTML = "<p> SDK version " + Gp.sdkVersion + " (" + Gp.sdkDate + ")</p>";
+
+} <!-- onload() -->
 
 </script>
 
