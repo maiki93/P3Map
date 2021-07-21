@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Titre de la page</title>
+  <!-- include CSS leaflet first -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin=""/>
+   <!-- And then, javascript, order important -->
+   <!-- Make sure you put this AFTER Leaflet's CSS -->
+	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin=""></script>
+   
+   <!-- Extension Géoportail pour Leaflet, choose APIKEY here -->
+   <script data-key="choisirinspire" src="../GpPluginLeaflet/GpPluginLeaflet.js"></script>
+   <!-- should be faster, maybe configurable, generated with key="choisirinspire" -->
+   <!-- <script data-url="../autoconf.json" src="../GpPluginLeaflet/GpPluginLeaflet.js"></script> -->
+   <link rel="stylesheet" href="../GpPluginLeaflet/GpPluginLeaflet.css" />
+   <!-- Parser IGN -->
+   <script type="text/javascript" src="parserAdress2.js"></script>
+</head>
+<body>
+
+<div id="map" style="width: 1000px; height: 500px;">
+	<h2>Map' loading....</h2>
+</div>
+
+<div id="info">
+	<h3>Here will be the info</h3>
+	<label>Latitude : <span id=latitude><span></label>
+	<br/>
+	<label>Longitude : <span id=longitude><span></label>
+	<br/>
+	<label>Parcel Id : <span id=parcelId><span></label>
+	<br/>
+	<label>Ville : <span id=municipality><span></label>
+	<br/>
+	<label>Rue : <span id=rue><span></label>
+	<label> / No de Rue : <span id=noRue><span></label>
+	<br/>
+	<label>INSEE id : <span id=inseeId><span></label>
+	<br/>
+	<label>Code Postal : <span id=codePostal><span></label>
+</div>
+
+<script>
+function go() {
+	var map = L.map("map").setView([44.888567,1.206361], 18);
+	var lyrOrtho = L.tileLayer(
+            'https://wxs.ign.fr/choisirgeoportail/geoportail/wmts?service=WMTS&request=GetTile&version=1.0.0&tilematrixset=PM&tilematrix={z}&tilecol={x}&tilerow={y}&layer=ORTHOIMAGERY.ORTHOPHOTOS&format=image/jpeg&style=normal',
+            {
+                minZoom : 0,
+                maxZoom : 18,
+                tileSize : 256,
+                attribution : "IGN-F/Géoportail"
+    });
+	var lyrCadastre = L.geoportalLayer.WMS({
+		layer: "CADASTRALPARCELS.PARCELS"
+	},{ // leafletParams
+        opacity: 0.35
+    });
+	map.addLayer(lyrOrtho);
+	map.addLayer(lyrCadastre);
+	map.on('click', onMapClick);
+
+} // end go()
+
+function onMapClick(e) {
+	alert("You clicked the map at:" + e.latlng);
+	var location = e.latlng;
+	//locationString = xmlDoc.getElementsByTagName('gml:pos')[0].textContent; //.nodeValue;
+	var s = location.toString().split(" ");
+	console.log(s[0]+" "+s[1]); 
+	console.log(e.latlng.lat+" "+e.latlng.lng);
+
+	//let pAddress = new parserAddress2(44.888567, 1.206361);
+	//let pAddress = new parserAddress2(s[0], s[1]);
+	let pAddress = new parserAddress2(e.latlng.lat, e.latlng.lng);
+	console.log("debug lat: "+ pAddress.getLat() + " lng :"+ pAddress.getLng() );
+	// to combine, do not manage, more tests
+	pAddress.requestParcelle(); 
+	pAddress.requestAddress();
+	
+	let allDataAddress = pAddress.fullData;
+	// fill the input
+	document.getElementById("latitude").textContent = allDataAddress.latitude;
+	document.getElementById("longitude").textContent = allDataAddress.longitude;
+	document.getElementById("parcelId").textContent = allDataAddress.parcelId;
+	document.getElementById("municipality").textContent = allDataAddress.municipality;
+	document.getElementById("rue").textContent = allDataAddress.streetName;
+	document.getElementById("noRue").textContent = allDataAddress.streetNb;
+	document.getElementById("inseeId").textContent = allDataAddress.inseeId;
+	document.getElementById("codePostal").textContent = allDataAddress.zipCode;
+}
+
+Gp.Services.getConfig({
+    	apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
+	//apiKey : "choisirgeoportail",
+	//apiKey : "choisirinspire",
+	onSuccess : go
+});
+</script>
+
+</body>
+</html>

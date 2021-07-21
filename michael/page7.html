@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Titre de la page</title>
+  <script type="text/javascript" src="parserAdress2.js"></script>
+  
+</head>
+<body>
+
+<div id="map" style="width: 1000px; height: 500px;">
+	<h2>Map' loading....</h2>
+</div>
+
+<div id="info">
+	<h3>Here will be the info</h3>
+	<label>Latitude : <span id=latitude><span></label>
+	<br/>
+	<label>Longitude : <span id=longitude><span></label>
+	<br/>
+	<label>Parcel Id : <span id=parcelId><span></label>
+	<br/>
+	<label>Ville : <span id=municipality><span></label>
+	<br/>
+	<label>Rue : <span id=rue><span></label>
+	<label> / No de Rue : <span id=noRue><span></label>
+	<br/>
+	<label>INSEE id : <span id=inseeId><span></label>
+	<br/>
+	<label>Code Postal : <span id=codePostal><span></label>
+</div>
+
+<script>
+let pAddress = new parserAddress2(44.888567, 1.206361);
+console.log("debug lat: "+ pAddress.getLat());
+// to combine
+//var dataIGN = 
+pAddress.requestParcelle();
+//var dataIGN = 
+pAddress.requestAddress();
+//console.log(dataIGN.Municipality);
+
+let allDataAddress = pAddress.fullData;
+// fill the input
+document.getElementById("latitude").textContent = allDataAddress.latitude;
+document.getElementById("longitude").textContent = allDataAddress.longitude;
+document.getElementById("parcelId").textContent = allDataAddress.parcelId;
+document.getElementById("municipality").textContent = allDataAddress.municipality;
+document.getElementById("rue").textContent = allDataAddress.streetName;
+document.getElementById("noRue").textContent = allDataAddress.streetNb;
+document.getElementById("inseeId").textContent = allDataAddress.inseeId;
+document.getElementById("codePostal").textContent = allDataAddress.zipCode;
+
+</script>
+
+</body>
+</html>

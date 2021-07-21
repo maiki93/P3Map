@@ -30,7 +30,7 @@ Parcelle 000 /C / 0063
 No INSEE commune : 24520
 
 First test
-- StreetAdress => get the adress back, city, insee ....
+- StreetAddress => get the adress back, city, insee ....
 - CadastralParcel => Toutes les infos 0063 / 1 / EC => SearchCentredistance = 0.0 ! good value to test
 - PositionOfInterest : préfecture (région), bordeaux, préfecture département(Périgueux)
 
@@ -54,3 +54,13 @@ Request (saved on PostMan): can combine CadastralParcel and StreetAdress
   </Request>
 </XLS>
 
+
+// tried to make both
+<ReverseGeocodeRequest> 
+	<ReverseGeocodePreference>StreetAdress</ReverseGeocodePreference> 
+		<Position> 
+			<gml:Point> 
+				<gml:pos>${this.latitude} ${this.longitude}</gml:pos> 
+			</gml:Point> 
+		</Position> 
+</ReverseGeocodeRequest> 

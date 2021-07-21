@@ -28,6 +28,11 @@
 
 <div id="info">
 	<h3>Here will be the info</h3>
+	<label>Latitude : <span id=latitude><span></label>
+	<br/>
+	<label>Longitude : <span id=longitude><span></label>
+	<br/>
+	<label>Parcel Id : <span id=parcelID><span></label>
 </div>
 
 <script>
@@ -125,24 +130,44 @@ function onMapClick(e) {
 		
    const uri2 = 'https://wxs.ign.fr/choisirgeoportail/geoportail/ols?xls='+encodeURI(uri);
    console.log(uri2);
-   alert( uri2 );
+   //alert( uri2 );
    var xmlHttp = new XMLHttpRequest();
    xmlHttp.open("GET", uri2, false);
    xmlHttp.send( null );
    console.log(xmlHttp.responseText);
    
-   parser = new DOMParser();
-   xmlDoc = parser.parseFromString(txt, "text/xml");
+   const parser = new DOMParser();
+   xmlDoc = parser.parseFromString(xmlHttp.responseText, "application/xml");
    //The prefix should not be included when you request the xml namespace
    //Gets "streetNumber" (note there is no prefix of "sn"
-   console.log(xmlDoc.getElementsByTagName("streetNumber")[0].childNodes[0].nodeValue);
+   //console.log(xmlDoc.getElementsByTagName("streetNumber")[0].childNodes[0].nodeValue);
 
+	//dataResponse = xmlDoc.getElementsByTagName("ReverseGeocodedLocation")[0];
+	//console.log(dataResponse);
    //Gets Street name
-   console.log(xmlDoc.getElementsByTagName("street")[0].childNodes[0].nodeValue);
+   //console.log(xmlDoc.getElementsByTagName("street")[0].childNodes[0].nodeValue);
+   //var locationString = dataResponse.getElementByTagName("gml:pos"); //.nodeValue; // not working on dataresponse
+   locationString = xmlDoc.getElementsByTagName('gml:pos')[0].textContent; //.nodeValue;
+   
+   var s = locationString.split(" ");
+   var latitude = s[0];
+   var longitude = s[1];
+   document.getElementById("latitude").textContent = latitude;
+   document.getElementById("longitude").textContent = longitude;
+   //<Adress countryCode="CadastralPlan">
+   //  StreetAdress
+   //     <Street>Parcel Number</StreeT>
+   var parcelId = xmlDoc.getElementsByTagName('Street')[0].textContent;
+   document.getElementById("parcelID").textContent = parcelId;
+   //document.getElementById("myspan").textContent="newtext";
+   //var insee = 
+   //alert(locationString);
+   
+   // /Response/ReverseGeocodeResponse/ReverseGeocodedLocation
+   
 
 //Gets Postal Code
-console.log(xmlDoc.getElementsByTagName("postalcode")[0].childNodes[0].nodeValue);
-    
+//console.log(xmlDoc.getElementsByTagName("postalcode")[0].childNodes[0].nodeValue);  
 }
 
 
